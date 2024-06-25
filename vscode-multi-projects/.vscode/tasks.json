@@ -25,5 +25,27 @@
             ],
             "problemMatcher": "$msCompile"
         },
+        {
+            "label": "cleanbackend",
+            "command": "dotnet",
+            "type": "process",
+            "args": [
+                "clean",
+                "${workspaceFolder}/Backend/Backend.csproj",
+                "/consoleloggerparameters:NoSummary"
+            ],
+            "problemMatcher": "$msCompile"
+        },
+        {
+            "label": "cleanfrontend",
+            "command": "dotnet",
+            "type": "process",
+            "args": [
+                "clean",
+                "${workspaceFolder}/Frontend/Frontend.csproj",
+                "/consoleloggerparameters:NoSummary"
+            ],
+            "problemMatcher": "$msCompile"
+        },
 	]
 }

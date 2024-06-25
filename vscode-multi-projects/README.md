@@ -122,3 +122,29 @@ Specify a name that you want and in the configurations it's important to specify
 ```
 
 Press "F5" or on the Play button to launch the new launch configuration with multiple projects.
+
+You can check Swagger Document
+* https://localhost:7278/swagger/index.html
+
+# Add Clean Tasks
+
+A clean task is often useful if your project is not building for strange and/or unknown reasons - sometimes these issues can be caused by the intermediate build files that are not recreated from repeated builds. A clean task will remove these files, which will get recreated during the next build.
+
+To add a clean task, add the following JSON snippet to the tasks array in your `tasks.json`:
+```json
+{
+    "label": "clean",
+    "command": "dotnet",
+    "type": "process",
+    "args": [
+        "clean",
+        "/consoleloggerparameters:NoSummary"
+    ],
+    "problemMatcher": "$msCompile"
+},
+```
+
+You can then run this task in one of two ways:
+
+1. From the Run menu select Run Task and select clean from the list.
+2. Hit `Ctrl+Shift+p` to open the Command Palette and enter tasks. Then select `Tasks: Run Task` and select clean from the list.
