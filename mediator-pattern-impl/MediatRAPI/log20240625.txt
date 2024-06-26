@@ -1,0 +1,32 @@
+2024-06-25 15:58:50.080 +07:00 [INF] Now listening on: http://localhost:5090
+2024-06-25 15:58:50.120 +07:00 [INF] Application started. Press Ctrl+C to shut down.
+2024-06-25 15:58:50.121 +07:00 [INF] Hosting environment: Development
+2024-06-25 15:58:50.122 +07:00 [INF] Content root path: /home/tvt/techspace/dotnet/dotnet-core-tutorials/mediator-pattern-impl/MediatRAPI
+2024-06-25 15:58:50.575 +07:00 [INF] Request starting HTTP/1.1 GET http://localhost:5090/swagger/index.html - null null
+2024-06-25 15:58:50.740 +07:00 [INF] Request finished HTTP/1.1 GET http://localhost:5090/swagger/index.html - 200 null text/html;charset=utf-8 166.5456ms
+2024-06-25 15:58:50.881 +07:00 [INF] Request starting HTTP/1.1 GET http://localhost:5090/swagger/v1/swagger.json - null null
+2024-06-25 15:58:50.890 +07:00 [INF] No action descriptors found. This may indicate an incorrectly configured application or missing application parts. To learn more, visit https://aka.ms/aspnet/mvc/app-parts
+2024-06-25 15:58:51.015 +07:00 [INF] Request finished HTTP/1.1 GET http://localhost:5090/swagger/v1/swagger.json - 200 null application/json;charset=utf-8 134.1169ms
+2024-06-25 16:45:42.438 +07:00 [INF] Now listening on: http://localhost:5090
+2024-06-25 16:45:42.468 +07:00 [INF] Application started. Press Ctrl+C to shut down.
+2024-06-25 16:45:42.469 +07:00 [INF] Hosting environment: Development
+2024-06-25 16:45:42.469 +07:00 [INF] Content root path: /home/tvt/techspace/dotnet/dotnet-core-tutorials/mediator-pattern-impl/MediatRAPI
+2024-06-25 16:45:42.995 +07:00 [INF] Request starting HTTP/1.1 GET http://localhost:5090/swagger - null null
+2024-06-25 16:45:43.094 +07:00 [INF] Request finished HTTP/1.1 GET http://localhost:5090/swagger - 301 0 null 99.2932ms
+2024-06-25 16:45:43.098 +07:00 [INF] Request starting HTTP/1.1 GET http://localhost:5090/swagger/index.html - null null
+2024-06-25 16:45:43.150 +07:00 [INF] Request finished HTTP/1.1 GET http://localhost:5090/swagger/index.html - 200 null text/html;charset=utf-8 51.8144ms
+2024-06-25 16:45:43.168 +07:00 [INF] Request starting HTTP/1.1 GET http://localhost:5090/swagger/swagger-ui.css - null null
+2024-06-25 16:45:43.168 +07:00 [INF] Request starting HTTP/1.1 GET http://localhost:5090/swagger/swagger-ui-standalone-preset.js - null null
+2024-06-25 16:45:43.168 +07:00 [INF] Request starting HTTP/1.1 GET http://localhost:5090/swagger/swagger-ui-bundle.js - null null
+2024-06-25 16:45:43.279 +07:00 [INF] Sending file. Request path: '/swagger-ui.css'. Physical path: 'N/A'
+2024-06-25 16:45:43.279 +07:00 [INF] Sending file. Request path: '/swagger-ui-standalone-preset.js'. Physical path: 'N/A'
+2024-06-25 16:45:43.288 +07:00 [INF] Request finished HTTP/1.1 GET http://localhost:5090/swagger/swagger-ui-standalone-preset.js - 200 339486 text/javascript 119.9763ms
+2024-06-25 16:45:43.288 +07:00 [INF] Request finished HTTP/1.1 GET http://localhost:5090/swagger/swagger-ui.css - 200 143943 text/css 120.0686ms
+2024-06-25 16:45:43.289 +07:00 [INF] Sending file. Request path: '/swagger-ui-bundle.js'. Physical path: 'N/A'
+2024-06-25 16:45:43.289 +07:00 [INF] Request finished HTTP/1.1 GET http://localhost:5090/swagger/swagger-ui-bundle.js - 200 1096145 text/javascript 121.4878ms
+2024-06-25 16:45:43.508 +07:00 [INF] Request starting HTTP/1.1 GET http://localhost:5090/swagger/v1/swagger.json - null null
+2024-06-25 16:45:43.514 +07:00 [INF] No action descriptors found. This may indicate an incorrectly configured application or missing application parts. To learn more, visit https://aka.ms/aspnet/mvc/app-parts
+2024-06-25 16:45:43.525 +07:00 [INF] Request starting HTTP/1.1 GET http://localhost:5090/swagger/favicon-32x32.png - null null
+2024-06-25 16:45:43.526 +07:00 [INF] Sending file. Request path: '/favicon-32x32.png'. Physical path: 'N/A'
+2024-06-25 16:45:43.526 +07:00 [INF] Request finished HTTP/1.1 GET http://localhost:5090/swagger/favicon-32x32.png - 200 628 image/png 1.1421ms
+2024-06-25 16:45:43.684 +07:00 [INF] Request finished HTTP/1.1 GET http://localhost:5090/swagger/v1/swagger.json - 200 null application/json;charset=utf-8 176.0125ms
