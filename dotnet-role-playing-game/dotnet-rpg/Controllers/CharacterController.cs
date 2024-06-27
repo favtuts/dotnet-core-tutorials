@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using dotnet_rpg.Models;
 
@@ -7,11 +9,22 @@ namespace dotnet_rpg.Controllers;
 [Route("[controller]")]
 public class CharacterController: ControllerBase
 {
-    private static Character knight = new Character();
+    private static readonly Character knight = new Character();
+
+    private static readonly List<Character> characters = [
+        new Character(),
+        new Character { Name = "Sam"}
+    ];
     
     [HttpGet("")]
-    public IActionResult Get()
+    public IActionResult GetSingle()
     {
-        return Ok(knight);
-    }    
+        return Ok(characters[0]);
+    }
+
+    [HttpGet("GetAll")]
+    public IActionResult GetList()
+    {
+        return Ok(characters);
+    }
 }
