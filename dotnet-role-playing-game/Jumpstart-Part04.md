@@ -129,3 +129,53 @@ public async Task<IActionResult> UpdateCharacter(UpdateCharacterDto updatedChara
 ```
 
 When we test that now in Postman, we’re still getting the whole response back, but the status code is 404 Not Found. Feel free to play around with that. For instance, you do not have to use the Message of the ServiceResponse only in case of an error. What about a success message like “You’re character has been saved.”?
+
+# Delete a Character
+
+To delete an RPG character, again, we have to make modifications to the `ICharacterService` interface, the `CharacterService` and the `CharacterController`.
+
+```csharp
+ask<ServiceResponse<List<GetCharacterDto>>> DeleteCharacter(int id);
+```
+
+Regarding the `CharacterService`, we can implement the interface automatically again and then copy the code of the `UpdateCharacter()` method and just make some changes.
+```csharp
+public async Task<ServiceResponse<List<GetCharacterDto>>> DeleteCharacter(int id)
+{
+    ServiceResponse<List<GetCharacterDto>> serviceResponse = new ServiceResponse<List<GetCharacterDto>>();
+    try
+    {
+        Character character = characters.First(c => c.Id == id);
+        characters.Remove(character);
+
+        serviceResponse.Data = (characters.Select(c => _mapper.Map<GetCharacterDto>(c))).ToList();
+    }
+    catch (Exception ex)
+    {
+        serviceResponse.Success = false;
+        serviceResponse.Message = ex.Message;
+    }
+    return serviceResponse;
+}
+```
+
+The controller method is a combination of the` GetSingle()` and `UpdateCharacter()` method.
+```csharp
+[HttpDelete("{id}")]
+public async Task<IActionResult> Delete(int id)
+{
+    ServiceResponse<List<GetCharacterDto>> response = await _characterService.DeleteCharacter(id);
+    if (response.Data == null)
+    {
+        return NotFound(response);
+    }
+
+    return Ok(response);
+}
+```
+
+Let's test it with PostMan
+```
+curl --location --request DELETE 'https://localhost:7263/Character/1' \
+--header 'accept: */*'
+```
