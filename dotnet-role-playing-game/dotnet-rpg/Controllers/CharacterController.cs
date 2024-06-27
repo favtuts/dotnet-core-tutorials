@@ -15,23 +15,23 @@ public class CharacterController : ControllerBase
     public CharacterController(ICharacterService characterService)
     {
         _characterService = characterService;
-    }    
-
-    [HttpGet("{id}")]
-    public IActionResult GetSingle(int id)
-    {
-        return Ok(_characterService.GetCharacterById(id));
     }
 
     [HttpGet("GetAll")]
-    public IActionResult GetList()
+    public async Task<IActionResult> Get()
     {
-        return Ok(_characterService.GetAllCharacters());
+        return Ok(await _characterService.GetAllCharacters());
+    }
+
+    [HttpGet("{id}")]
+    public async Task<IActionResult> GetSingle(int id)
+    {
+        return Ok(await _characterService.GetCharacterById(id));
     }
 
     [HttpPost]
-    public IActionResult AddCharacter(Character newCharacter)
-    {        
-        return Ok(_characterService.AddCharacter(newCharacter));
+    public async Task<IActionResult> AddCharacter(Character newCharacter)
+    {
+        return Ok(await _characterService.AddCharacter(newCharacter));
     }
 }
