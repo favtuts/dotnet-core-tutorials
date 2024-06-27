@@ -68,3 +68,27 @@ curl --location 'https://localhost:7263/Character' \
     "name" : "Percival"
 }'
 ```
+
+# Best Practice: Web API Structure
+
+We will inject the necessary services into the controller - so we will use dependency injection.
+
+We can also introduce the idea of Data Transfer Objects, or short DTOs. We already have Models, but it’s common to use these DTOs for the communication between client and server.
+
+The difference is this: DTOs are objects you won’t find in the database, i.e. they won’t be mapped. Models, in turn, are a representation of a database table.
+
+In this case we want to save this information in the database but don’t want to send it back to the client. Here the DTO comes in.
+
+We grab the model and map information of the model to the DTO. There are libraries that do this for us, like Automapper, so we don’t have to do this manually.
+
+Apart from that we can also create DTOs that combine properties of several models. They simply give us more freedom in what we want to return to the client.
+
+# Character Service
+
+To format code: Press CTRL + K + F , or right click -> Format Selection
+
+To add using directives for the missing types, click the lightbulb or press CTRL + . (control and period)
+
+To add a constructor, We can add it with the snippet `ctor`. So, just write `ctor` and then hit `tab`.
+
+
