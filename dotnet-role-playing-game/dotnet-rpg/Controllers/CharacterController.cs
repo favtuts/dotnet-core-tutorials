@@ -13,18 +13,25 @@ public class CharacterController: ControllerBase
 
     private static readonly List<Character> characters = [
         new Character(),
-        new Character { Name = "Sam"}
+        new Character { Id = 1, Name = "Sam"}
     ];
     
-    [HttpGet("")]
-    public IActionResult GetSingle()
+    [HttpGet("{id}")]
+    public IActionResult GetSingle(int id)
     {
-        return Ok(characters[0]);
+        return Ok(characters.FirstOrDefault(c => c.Id == id));
     }
 
     [HttpGet("GetAll")]
     public IActionResult GetList()
     {
+        return Ok(characters);
+    }
+
+    [HttpPost]
+    public IActionResult AddCharacter(Character newCharacter)
+    {
+        characters.Add(newCharacter);
         return Ok(characters);
     }
 }
