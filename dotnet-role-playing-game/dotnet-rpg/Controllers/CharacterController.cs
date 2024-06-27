@@ -3,6 +3,7 @@ using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using dotnet_rpg.Models;
 using dotnet_rpg.Services;
+using dotnet_rpg.Dtos.Character;
 
 namespace dotnet_rpg.Controllers;
 
@@ -30,7 +31,7 @@ public class CharacterController : ControllerBase
     }
 
     [HttpPost]
-    public async Task<IActionResult> AddCharacter(Character newCharacter)
+    public async Task<IActionResult> AddCharacter(AddCharacterDto newCharacter)
     {
         return Ok(await _characterService.AddCharacter(newCharacter));
     }
