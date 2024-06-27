@@ -45,3 +45,4 @@ msbuild.wrn
 
 # Except for the themes directories:
 !vscode-multi-projects/.vscode
+!efcore-webapi-jumstart/.vscode
