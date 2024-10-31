@@ -3,10 +3,22 @@
 
 # Create New Project Console Application
 
+Create new console app:
 ```bash
 $ cd smtp-send-emails
 $ dotnet new console -n SmtpTool
 ```
+
+Run the console app:
+```sh
+$ dotnet run
+```
+
+Publish the console app:
+```sh
+$ dotnet publish
+```
+
 
 # Configure CSharp Debugging
 * https://stackoverflow.com/questions/72601702/how-to-debug-dotnet-core-source-code-using-visual-studio-code
@@ -89,4 +101,102 @@ Some configuration fields:
 * Cwd: The working directory of the target process.
 * Args: These are the arguments that will be passed to your program.
 * Stop at Entry: If you need to stop at the entry point of the target, you can optionally set stopAtEntry to be "true".
+
+
+# Build AppSettings for Development
+
+When developing C# .NET applications, it's common to store configuration settings in a JSON file, typically named `appsettings.json` . 
+
+To read from `appsettings.json`, we need to add the `Microsoft.Extensions.Configuration` package.
+
+Run the following command.
+```bash
+dotnet add package Microsoft.Extensions.Configuration 
+dotnet add package Microsoft.Extensions.Configuration.Json 
+dotnet add package Microsoft.Extensions.Configuration.Binder
+```
+
+In the root of your project, create a file named `appsettings.json` and add some configuration settings.
+```json
+{  
+  "Smtp": {
+    "Host": "smtp.gmail.com",
+    "Port": "587",
+    "Username": "<YourGmailUserName>",
+    "Password": "<YourGmailPassword>",
+    "From": "Your Name"
+  }
+}
+```
+
+Add your appsettings files to your project for each environment with "Copy to Output Directory" so that it is included with the build. You should add your appSettings files in your `.csproj` file as bellow:
+```xml
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Extensions.Configuration" Version="8.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.Binder" Version="8.0.2" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="8.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="appsettings.DEV.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="appsettings.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="appsettings.PROD.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="appsettings.QA.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
+</Project>
+```
+
+Then you can inject and reach IConfiguration that reads appsettings file according to the environment via below code.
+```cs
+using System;
+using System.Net;
+using System.Net.Mail;
+using Microsoft.Extensions.Configuration;
+
+class Program
+{
+    static void Main(string[] args)
+    {        
+        var environment = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
+        Console.WriteLine($"Environment is {environment}");
+
+        var builder = new ConfigurationBuilder()
+            .SetBasePath(Directory.GetCurrentDirectory())
+            .AddJsonFile($"appsettings.{environment}.json", optional: true, reloadOnChange: true)
+            ;
+
+        IConfiguration configuration = builder.Build();
+
+        var emailHost = configuration["Smtp:Host"];
+        Console.WriteLine($"Email Host is: {emailHost}");
+    }
+}
+```
+
+Now time to run. But first do dotnet restore and then dotnet run.
+```sh
+$ dotnet restore
+$ ASPNETCORE_ENVIRONMENT=DEV dotnet run
+
+Environment is DEV
+Email Host is: smtp.gmail.com
+```
 
