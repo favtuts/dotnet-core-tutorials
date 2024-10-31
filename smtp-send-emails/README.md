@@ -200,3 +200,17 @@ Environment is DEV
 Email Host is: smtp.gmail.com
 ```
 
+The following approach will load the content from the JSON file, then bind the content to two strongly-typed options/settings classes, which can be a lot cleaner than going value-by-value:
+```cs
+public class MyFirstClass
+    {
+        public string Option1 { get; set; }
+        public int Option2 { get; set; }
+    }
+
+    public class MySecondClass
+    {
+        public string SettingOne { get; set; }
+        public int SettingTwo { get; set; }
+    }
+```

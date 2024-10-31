@@ -19,5 +19,16 @@ class Program
 
         var emailHost = configuration["Smtp:Host"];
         Console.WriteLine($"Email Host is: {emailHost}");
+
+        var smtpSettings = configuration.GetSection("Smtp").Get<SmtpSettings>();
+        Console.WriteLine($"Smtp Username: {smtpSettings?.Username}");
+    }
+
+    public class SmtpSettings {
+        public string Host { get; set; }   
+        public int Port { get; set; }
+        public string Username { get; set; }
+        public string Password { get; set; }
+        public string From { get; set; }
     }
 }
