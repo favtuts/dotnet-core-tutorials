@@ -10,3 +10,4 @@ All .NET Core tutorials
 * [.NET Core 3.1 Web API & Entity Framework Core Jumpstart](./efcore-webapi-jumstart/README.md)
 * [How to use EF Core as an In-memory database in ASP.NET Core for testing](./efcore-inmemory-testing/README.md)
 * [.NET Core Web API & Entity Framework Jumpstart Series' Articles](./dotnet-role-playing-game/README.md)
+* [How to Send Emails in C# .NET via SMTP](./smtp-send-emails/README.md)
