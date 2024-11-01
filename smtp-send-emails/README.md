@@ -202,15 +202,77 @@ Email Host is: smtp.gmail.com
 
 The following approach will load the content from the JSON file, then bind the content to two strongly-typed options/settings classes, which can be a lot cleaner than going value-by-value:
 ```cs
-public class MyFirstClass
-    {
-        public string Option1 { get; set; }
-        public int Option2 { get; set; }
+    public class SmtpSettings {
+        public string Host { get; set; }   
+        public int Port { get; set; }
+        public string Username { get; set; }
+        public string Password { get; set; }
+        public bool EnableSsl { get; set; }
+        public string From { get; set; }
     }
 
-    public class MySecondClass
-    {
-        public string SettingOne { get; set; }
-        public int SettingTwo { get; set; }
+    public class EmailSettings {
+        public string Sender {get; set;}
+        public string Recipient {get; set;}        
     }
 ```
+
+And the updated appsettings.json content:
+```json
+{
+    "Smtp": {
+        "Host": "smtp.gmail.com",
+        "Port": "587",
+        "Username": "<YourGmailUserName>",
+        "Password": "<YourGmailPassword>",
+        "EnableSsl": true,
+        "From": "Your Name"
+    },
+    "Email": {
+        "Sender": "<SenderEmail>",
+        "Recipient": "<RecipientEmail>"
+    }
+}
+```
+
+# Sending email using System.Net.Mail
+
+Sending plain text email:
+```cs
+public static void SendEmailViaNetMail(IConfiguration configuration) {
+        var smtpSettings = configuration.GetSection("Smtp").Get<SmtpSettings>();
+        var emailSettings = configuration.GetSection("Email").Get<EmailSettings>();
+        var senderEmail = emailSettings.Sender;
+        var recipientEmail = emailSettings.Recipient;
+        
+        MailMessage mailMessage = new MailMessage();
+        mailMessage.From = new MailAddress(senderEmail);
+        mailMessage.To.Add(recipientEmail);
+        mailMessage.Subject = "Hello world";
+        mailMessage.Body = "This is a test email sent using C#.NET";
+
+        SmtpClient smtpClient= new SmtpClient();
+        smtpClient.Host = smtpSettings.Host;
+        smtpClient.Port = smtpSettings.Port;
+        smtpClient.UseDefaultCredentials = false;
+        smtpClient.Credentials = new NetworkCredential(smtpSettings.Username, smtpSettings.Password);
+        smtpClient.EnableSsl = smtpSettings.EnableSsl;
+        try
+        {
+            smtpClient.Send(mailMessage);
+            Console.WriteLine("Email Sent Successfully.");
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine("Error: " + ex.Message);
+        }
+    }
+```
+
+Sending an Email With Attachments:
+```cs
+
+```
+
+# Sending email using MailKit
+
