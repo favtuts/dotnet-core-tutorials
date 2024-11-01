@@ -271,7 +271,19 @@ public static void SendEmailViaNetMail(IConfiguration configuration) {
 
 Sending an Email With Attachments:
 ```cs
+MailMessage message = new MailMessage();
+mailMessage.From = new MailAddress("email@maileroo.com");
+mailMessage.To.Add("recipient@email.com");
+mailMessage.Subject = "Hello world";
+mailMessage.Body = "This is a test email with an attachment.";
 
+// Create a new Attachment object
+Attachment attachment = new Attachment("path_to_attachment_file.txt");
+
+// Add the attachment to the MailMessage object
+message.Attachments.Add(another_attachment.pdf);
+
+smtpClient.Send(message);
 ```
 
 # Sending email using MailKit

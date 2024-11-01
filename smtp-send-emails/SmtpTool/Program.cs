@@ -22,9 +22,40 @@ class Program
 
         var smtpSettings = configuration.GetSection("Smtp").Get<SmtpSettings>();
         Console.WriteLine($"Smtp Username: {smtpSettings?.Username}");
+        
+        var emailSettings = configuration.GetSection("Email").Get<EmailSettings>();
+        Console.WriteLine($"Sending from Email: {emailSettings?.Sender}");
 
         // Test sending email via System.Net.Mail
-        SendEmailViaNetMail(configuration);
+        var plainTextEmailRequest = new EmailRequest() {
+            FromEmail=emailSettings.Sender,
+            ToEmail=emailSettings.Recipient,
+            Subject="Hello world PlainText", 
+            Body="This is a test email sent using C#.NET",
+            IsHtmlBody = false             
+        };
+        //SendEmailViaNetMail(plainTextEmailRequest, smtpSettings);
+
+        var htmlEmailRequest = new EmailRequest() {
+            FromEmail=emailSettings.Sender,
+            ToEmail=emailSettings.Recipient,
+            Subject="Hello world HtmlFormat", 
+            Body="<em>It's great to use HTML in mail!!</em>",
+            IsHtmlBody = true             
+        };
+
+        SendEmailViaNetMail(htmlEmailRequest, smtpSettings);
+
+        var attachmentEmailRequest = new EmailRequest() {
+            FromEmail=emailSettings.Sender,
+            ToEmail=emailSettings.Recipient,
+            Subject="Hello world Attachment", 
+            Body="This is a test email sent using C#.NET",
+            IsHtmlBody=false,
+            Attachments = new List<string> {"instruction.txt", "8-ball_rules_bca.pdf"}
+        };
+
+        //SendEmailViaNetMail(attachmentEmailRequest, smtpSettings);
     }
 
     public class SmtpSettings {
@@ -41,17 +72,36 @@ class Program
         public string Recipient {get; set;}        
     }
 
-    public static void SendEmailViaNetMail(IConfiguration configuration) {
-        var smtpSettings = configuration.GetSection("Smtp").Get<SmtpSettings>();
-        var emailSettings = configuration.GetSection("Email").Get<EmailSettings>();
-        var senderEmail = emailSettings.Sender;
-        var recipientEmail = emailSettings.Recipient;
+    public class EmailRequest {
+        public string Subject {get; set;}
+        public string Body {get; set;}
+        public bool IsHtmlBody {get; set;}
+        public string FromEmail {get; set;}
+        public string ToEmail {get; set;}
+        public List<string> Attachments {get; set;}
+    }
+
+    public static void SendEmailViaNetMail(EmailRequest emailRequest, SmtpSettings smtpSettings) {        
+        var senderEmail = emailRequest.FromEmail;
+        var recipientEmail = emailRequest.ToEmail;
         
         MailMessage mailMessage = new MailMessage();
         mailMessage.From = new MailAddress(senderEmail);
         mailMessage.To.Add(recipientEmail);
-        mailMessage.Subject = "Hello world";
-        mailMessage.Body = "This is a test email sent using C#.NET";
+        mailMessage.Subject = emailRequest.Subject;
+
+        mailMessage.Body = emailRequest.Body;
+        mailMessage.IsBodyHtml = emailRequest.IsHtmlBody;
+        
+        if (emailRequest.Attachments != null && emailRequest.Attachments.Count>0) {
+            foreach (var filePath in emailRequest.Attachments) {
+                // Create a new Attachment object
+                Attachment attachment = new Attachment(filePath);
+
+                // Add the attachment to the MailMessage object
+                mailMessage.Attachments.Add(attachment);
+            }           
+        }
 
         SmtpClient smtpClient= new SmtpClient();
         smtpClient.Host = smtpSettings.Host;
@@ -59,6 +109,7 @@ class Program
         smtpClient.UseDefaultCredentials = false;
         smtpClient.Credentials = new NetworkCredential(smtpSettings.Username, smtpSettings.Password);
         smtpClient.EnableSsl = smtpSettings.EnableSsl;
+
         try
         {
             smtpClient.Send(mailMessage);
