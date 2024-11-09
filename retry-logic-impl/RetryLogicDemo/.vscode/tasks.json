@@ -1,0 +1,28 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+        {
+            "label": "buildretrylogicdemoapp",
+            "command": "dotnet",
+            "type": "process",
+            "args": [
+                "build",
+                "${workspaceFolder}/RetryLogicDemo.csproj",
+                "/property:GenerateFullPaths=true",
+                "/consoleloggerparameters:NoSummary"
+            ],
+            "problemMatcher": "$msCompile"
+        },
+        {
+            "label": "cleanretrylogicdemoapp",
+            "command": "dotnet",
+            "type": "process",
+            "args": [
+                "clean",
+                "${workspaceFolder}/RetryLogicDemo.csproj",
+                "/consoleloggerparameters:NoSummary"
+            ],
+            "problemMatcher": "$msCompile"
+        }       
+    ]
+}
