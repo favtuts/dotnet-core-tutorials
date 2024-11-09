@@ -9,7 +9,9 @@ public class ApiHelper
 
     public ApiHelper(string apiServer)
     {
-        _httpClient = new HttpClient
+        var httpClientHandler = new HttpClientHandler();
+        var retryHandler = new RetrySimpleHandler(httpClientHandler, maxRetries: 3, delayBetweenRetries: TimeSpan.FromSeconds(1));
+        _httpClient = new HttpClient(retryHandler)
         {
             BaseAddress = new Uri(apiServer)
         };

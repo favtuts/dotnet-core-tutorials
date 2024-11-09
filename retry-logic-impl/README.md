@@ -94,3 +94,28 @@ Then create the `launch.json` configuration file:
     ]
 }
 ```
+
+# Install Dependencies
+
+```bash
+dotnet add package Newtonsoft.Json
+```
+
+# REST API - ready to use
+* https://restful-api.dev/
+
+This provide the real REST API where your data is securely stored in a real database
+
+
+# App-vNext/Polly
+* https://github.com/App-vNext/Polly
+
+Polly is a .NET resilience and transient-fault-handling library that allows developers to express resilience strategies such as Retry, Circuit Breaker, Hedging, Timeout, Rate Limiter and Fallback in a fluent and thread-safe manner.
+
+```bash
+dotnet add package Polly.Core
+dotnet add package Polly.Extensions
+dotnet add package Polly.RateLimiting
+dotnet add package Polly.Testing
+dotnet add package Polly
+```
